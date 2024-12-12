@@ -1,7 +1,7 @@
 package com.pronix.controller;
 
 import com.pronix.entity.Product;
-import com.pronix.service.ProductService;
+import com.pronix.service.ProductServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,31 +12,31 @@ import java.util.List;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
 
     @PostMapping("/save")
     public Product saveProduct(@Valid @RequestBody Product product){
-        return productService.saveProduct(product);
+        return productServiceImpl.saveProduct(product);
     }
 
     @GetMapping("/all")
     public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+        return productServiceImpl.getAllProducts();
     }
 
     @GetMapping("/id/{id}")
     public Product getProductById(@PathVariable String id){
-        return productService.getProductById(id);
+        return productServiceImpl.getProductById(id);
     }
 
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id, @Valid @RequestBody Product product){
-        return productService.updateProduct(id, product);
+        return productServiceImpl.updateProduct(id, product);
     }
 
     @DeleteMapping("/{id}")
     public String deleteProductById(@PathVariable Long id){
-        return productService.deleteProductById(id);
+        return productServiceImpl.deleteProductById(id);
     }
 
 }
