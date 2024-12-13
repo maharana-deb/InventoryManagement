@@ -24,9 +24,13 @@ public class Product {
     @NotBlank(message = "Product name can not be blank. Please check.")
     private String name;
 
-    @NotNull(message = "Product description can not be null. Please check.")
-    @NotBlank(message = "Product description can not be blank. Please check.")
-    private String description;
+    @NotNull(message = "Product brand can not be null. Please check.")
+    @NotBlank(message = "Product brand can not be blank. Please check.")
+    private String brand;
+
+    @NotNull(message = "Product category can not be null. Please check.")
+    @NotBlank(message = "Product category can not be blank. Please check.")
+    private String category;
 
     @NotNull(message = "Product price can not be null. Please check.")
     @Positive(message = "Product price should be a positive number only. Please check.")
@@ -35,6 +39,22 @@ public class Product {
     @NotNull(message = "Product quantity can not be null. Please check.")
     @Positive(message = "Product quantity should be a positive number only. Please check.")
     private Integer quantity;
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
     public Long getId() {
         return id;
@@ -50,14 +70,6 @@ public class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Double getPrice() {
@@ -81,7 +93,8 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                ", brand='" + brand + '\'' +
+                ", category='" + category + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +
                 '}';
