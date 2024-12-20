@@ -1,9 +1,12 @@
 package com.pronix.controller;
 
 import com.pronix.entity.User;
+import com.pronix.exception.OnLogin;
+import com.pronix.exception.OnRegister;
 import com.pronix.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +20,12 @@ public class UserController {
     private UserService service;
 
     @PostMapping("/register")
-    public User register(@Valid @RequestBody User user) {
+    public User register(@Validated(OnRegister.class) @RequestBody User user) {
        return service.register(user);
     }
 
     @PostMapping("/login")
-    public String login(@Valid @RequestBody User user){
+    public String login(@Validated(OnLogin.class) @RequestBody User user){
         return service.verify(user);
     }
 

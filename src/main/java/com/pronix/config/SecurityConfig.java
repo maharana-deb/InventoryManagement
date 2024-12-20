@@ -34,8 +34,10 @@ public class SecurityConfig {
 
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/user/login", "/user/register").permitAll()
-                        .requestMatchers( HttpMethod.GET, "/product/**").permitAll()
+                        .requestMatchers("/user/login").permitAll()
+                        .requestMatchers("/user/register").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/product/**").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers("/product/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session ->
@@ -47,11 +49,13 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
+
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
         provider.setUserDetailsService(userDetailsService);
 
         return provider;
+
     }
 
     @Bean

@@ -1,7 +1,7 @@
 package com.pronix.config;
 
 import com.pronix.service.JwtService;
-import com.pronix.service.MyUserDetailsService;
+import com.pronix.service.UserDetailsImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JwtService jwtService;
+    private JwtService jwtUtils;
 
     @Autowired
     private ApplicationContext context;
@@ -34,14 +34,14 @@ public class JwtFilter extends OncePerRequestFilter {
 
         if(authHeader != null && authHeader.startsWith("Bearer ")){
             token = authHeader.substring(7);
-            username = jwtService.extractUserName(token);
+            username = jwtUtils.extractUserName(token);
         }
 
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
 
-            UserDetails userDetails = context.getBean(MyUserDetailsService.class).loadUserByUsername(username);
+            UserDetails userDetails = context.getBean(UserDetailsImpl.class).loadUserByUsername(username);
 
-            if(jwtService.validateToken(token, userDetails)){
+            if(jwtUtils.validateToken(token, userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
