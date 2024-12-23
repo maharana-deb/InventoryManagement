@@ -1,8 +1,30 @@
-1. Spring boot rest api to perform crud operations on the database.
-2. There are mainly two entities - product and user.
-3. User entity is for handling the crud operations on product. 
-4. Used role based authorization with jwt.
-5. In it, only an admin can register a person and can grant his authority as user or admin.
-6. The user can only view the products only, but the admin can perform all crud operations both on the user and product db.
-7. Implemented global exception handling for managing some commonly faced exceptions.
-8. Implemented swagger ui.
+This project is a Spring Boot REST API designed for managing products and users with role-based access control. It demonstrates CRUD operations on a database with global exception handling, JWT-based authentication, and Swagger UI for API documentation.
+
+Features
+
+CRUD Operations:
+
+Manage products (add, update, delete, view) with ProductController.
+Manage users (register, update, delete, view) with UserController.
+
+Role-Based Authorization:
+
+Regular users can only view products.
+Admin users can perform CRUD operations on both users and products.
+
+JWT Authentication:
+
+Secure API endpoints using JSON Web Tokens.
+Only an admin can register new users and assign roles (admin or user).
+
+Global Exception Handling:
+
+Handle common exceptions globally using GlobalExceptionHandler.
+
+Swagger UI:
+
+For API documentation.
+
+Spring Boot Validation:
+
+Validation with spring-boot-starter-validation.
