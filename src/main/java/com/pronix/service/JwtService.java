@@ -18,7 +18,7 @@ import java.util.function.Function;
 @Service
 public class JwtService {
 
-    private String secretKey = "";
+    private String secretKey = "bd9ae1b0ca9aeb411760f12555a214df121ab34c0ab2c2cfe319306db1eb81b9";
 
     public JwtService() throws NoSuchAlgorithmException {
         KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");

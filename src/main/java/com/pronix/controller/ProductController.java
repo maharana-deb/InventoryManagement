@@ -4,6 +4,7 @@ import com.pronix.entity.Product;
 import com.pronix.service.ProductServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -15,8 +16,9 @@ public class ProductController {
     private ProductServiceImpl productServiceImpl;
 
     @PostMapping("/save")
-    public Product saveProduct(@Valid @RequestBody Product product){
-        return productServiceImpl.saveProduct(product);
+    public ResponseEntity<Product> saveProduct(@Valid @RequestBody Product product){
+        Product savedProduct = productServiceImpl.saveProduct(product);
+        return ResponseEntity.ok(savedProduct);
     }
 
     @GetMapping("/all")
@@ -25,18 +27,21 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable String id){
-        return productServiceImpl.getProductById(id);
+    public ResponseEntity<Product> getProductById(@PathVariable String id){
+        Product product = productServiceImpl.getProductById(id);
+        return ResponseEntity.ok(product);
     }
 
     @PutMapping("/{id}")
-    public Product updateProduct(@PathVariable Long id, @Valid @RequestBody Product product){
-        return productServiceImpl.updateProduct(id, product);
+    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @Valid @RequestBody Product product){
+        Product updatedProduct = productServiceImpl.updateProduct(id, product);
+        return ResponseEntity.ok(updatedProduct);
     }
 
     @DeleteMapping("/{id}")
-    public String deleteProductById(@PathVariable Long id){
-        return productServiceImpl.deleteProductById(id);
+    public ResponseEntity<String> deleteProductById(@PathVariable Long id){
+        String message = productServiceImpl.deleteProductById(id);
+        return ResponseEntity.ok(message);
     }
 
 }

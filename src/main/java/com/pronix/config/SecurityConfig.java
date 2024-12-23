@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -35,7 +34,7 @@ public class SecurityConfig {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/user/login").permitAll()
-                        .requestMatchers("/user/register").hasAuthority("ADMIN")
+                        .requestMatchers("/user/register", "/user/all", "/user/{id}").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/product/**").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers("/product/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
@@ -44,6 +43,11 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+
+        // Only an admin can register a person and give him authority of user or admin
+        // the user can only view products
+        // the admin can perform any crud operations
+        // the user registration, update, deletion or viewing is managed by an admin only
 
     }
 
