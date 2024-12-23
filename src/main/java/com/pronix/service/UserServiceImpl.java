@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService{
 
         User regUser = userRepository.save(newUser);
 
-        return new UserDto(regUser.getId(), regUser.getFirstName(), regUser.getLastName(), regUser.getUsername());
+        return new UserDto(regUser.getFirstName(), regUser.getLastName(), regUser.getUsername(), regUser.getId());
 
     }
 
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService{
 
             User updatedUser = userRepository.save(user);
 
-            return new UserDto(updatedUser.getId() , updatedUser.getFirstName(), updatedUser.getLastName(), updatedUser.getUsername());
+            return new UserDto(updatedUser.getFirstName(), updatedUser.getLastName(), updatedUser.getUsername(), updatedUser.getId());
 
         }
 
@@ -87,10 +87,11 @@ public class UserServiceImpl implements UserService{
 
         List<UserDto> userDtos = users.stream()
                 .map(user -> new UserDto(
-                        user.getId(),
+
                         user.getFirstName(),
                         user.getLastName(),
-                        user.getUsername()
+                        user.getUsername(),
+                        user.getId()
                 ))
                 .collect(Collectors.toList());
 
@@ -105,7 +106,7 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(Integer.valueOf(id))
                 .orElseThrow(() -> new ResourceNotFoundException("Couldn't find any user with the provided id."));
 
-        return new UserDto(user.getId(), user.getFirstName(), user.getLastName(), user.getUsername());
+        return new UserDto(user.getFirstName(), user.getLastName(), user.getUsername(), user.getId());
 
     }
 
