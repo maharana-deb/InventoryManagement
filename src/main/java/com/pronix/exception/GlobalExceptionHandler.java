@@ -18,24 +18,29 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Map<String, Object>> resourceNotFoundException(ResourceNotFoundException exception, WebRequest request) {
-        return exceptionUtil.buildResponseEntity(exception, HttpStatus.NOT_FOUND, request);
+        return exceptionUtil.buildResponseEntity(exception, HttpStatus.OK, request);
     }
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<Map<String, Object>> badRequestException(BadRequestException exception, WebRequest request){
-        return exceptionUtil.buildResponseEntity(exception, HttpStatus.BAD_REQUEST, request);
+        return exceptionUtil.buildResponseEntity(exception, HttpStatus.OK, request);
     }
 
     @ExceptionHandler(AuthenticationFailedException.class)
     public ResponseEntity<Map<String, Object>> authenticationFailedException(AuthenticationFailedException exception, WebRequest request){
-        return exceptionUtil.buildResponseEntity(exception, HttpStatus.UNAUTHORIZED, request);
+        return exceptionUtil.buildResponseEntity(exception, HttpStatus.OK, request);
+    }
+
+    @ExceptionHandler(NoDataAvailableException.class)
+    public ResponseEntity<Map<String, Object>> noDataAvailableException(NoDataAvailableException exception, WebRequest request){
+        return exceptionUtil.buildResponseEntity(exception, HttpStatus.OK, request);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationException(MethodArgumentNotValidException exception){
         Map<String, Object> errors = new HashMap<>();
         exception.getBindingResult().getFieldErrors().forEach(error -> errors.put("message", error.getDefaultMessage()));
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.OK);
     }
 
 }

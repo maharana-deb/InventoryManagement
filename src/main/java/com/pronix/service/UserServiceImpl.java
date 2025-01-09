@@ -87,7 +87,6 @@ public class UserServiceImpl implements UserService{
 
         List<UserDto> userDtos = users.stream()
                 .map(user -> new UserDto(
-
                         user.getFirstName(),
                         user.getLastName(),
                         user.getUsername(),

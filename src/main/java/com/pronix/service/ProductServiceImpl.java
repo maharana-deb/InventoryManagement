@@ -2,6 +2,7 @@ package com.pronix.service;
 
 import com.pronix.entity.Product;
 import com.pronix.exception.BadRequestException;
+import com.pronix.exception.NoDataAvailableException;
 import com.pronix.exception.ResourceNotFoundException;
 import com.pronix.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,14 @@ public class ProductServiceImpl implements ProductService{
     }
     
     public List<Product> getAllProducts(){
-        return productRepository.findAll();
+
+        List<Product> products = productRepository.findAll();
+
+        if(products.isEmpty()){
+            throw new NoDataAvailableException("There are currently no products available in the database.");
+        }
+        return products;
+
     }
 
     public Product getProductById(String id) {
